@@ -1,0 +1,2 @@
+data:
+    - { html: "<html>\n\n<head>\n\t<title>%{subject}</title>" }

@@ -1,0 +1,2 @@
+DATA:
+    - { value1: "<p>\nLine 1.</p>", value2: hi}

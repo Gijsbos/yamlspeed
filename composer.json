@@ -1,0 +1,27 @@
+{
+    "name": "gijsbos/yamlspeed",
+    "description": "Yaml Parser",
+    "keywords": [
+        "yamlspeed",
+        "yaml"
+    ],
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Gijs and contributors",
+            "homepage": "https://github.com/gijsbos/yamlspeed/graphs/contributors"
+        }
+    ],
+    "require-dev": {
+        "phpunit/phpunit": "^5.7 || ^9.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "YamlSpeed\\": "src/"
+        }
+    },
+    "require": {
+        "gijsbos/stringfuncs": "^1.1"
+    }
+}
