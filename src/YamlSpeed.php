@@ -39,6 +39,7 @@ class YamlSpeed
     private null|string $cacheFolder;
     private string $cacheFileName;
     private bool $parseConstants;
+    private bool $parseEnvVars;
     private bool $parseYamlFiles;
     private array $options;
 
@@ -70,6 +71,7 @@ class YamlSpeed
         $this->cacheFolder = $this->arrayOption("cacheFolder", $options, null);
         $this->cacheFileName = $this->arrayOption("cacheFileName", $options, ".yamlspeed.cache");
         $this->parseConstants = $this->arrayHasOption("parseConstants", $options, false);
+        $this->parseEnvVars = $this->arrayHasOption("parseEnvVars", $options, false);
         $this->parseYamlFiles = $this->arrayHasOption("parseYamlFiles", $options, false);
         $this->options = $options;
 
@@ -178,6 +180,14 @@ class YamlSpeed
     public function setParseConstants(bool $parseConstants)
     {
         $this->parseConstants = $parseConstants;
+    }
+
+    /**
+     * setParseEnvVars
+     */
+    public function setParseEnvVars(bool $parseEnvVars)
+    {
+        $this->parseEnvVars = $parseEnvVars;
     }
 
     /**
@@ -393,6 +403,25 @@ class YamlSpeed
             $this->quoteType = null;
 
         return $stringHasCloseQuote;
+    }
+
+    /**
+     * parseEnv
+     */
+    private function parseEnv(string $input)
+    {
+        return preg_replace_callback("/\\$\{.+?\}/", function($match) use ($input)
+        {
+            // Extract key from matching string
+            $string = $match[0];
+            $key = substr($string, 2, strlen($string) - 3);
+
+            // Get value
+            $value = env($key);
+
+            // Return
+            return $value === false ? "\${$key}" : $value;
+        }, $input);
     }
 
     /**
@@ -722,6 +751,9 @@ class YamlSpeed
             // Constant
             case !$isWrappedInQuotes && $this->parseConstants && defined($input):
                 return constant($input);
+
+            case !$isWrappedInQuotes && $this->parseEnvVars && str_starts_ends_with($input, '${', '}'):
+                return $this->parseEnv($input);
 
             // Anchor '&'
             case $this->isAnchorSymbol($input):

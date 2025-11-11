@@ -495,6 +495,20 @@ final class YamlSpeedTest extends TestCase
         $this->assertEquals($expectedResult, $result);
     }
 
+    public function testKeyValueValueEnv()
+    {
+        $yaml = new YamlSpeed(["parseEnvVars" => true]);
+        putenv("FOO=BAR");
+        $text = <<<YAML
+                key: \${FOO}
+                YAML;
+        $result = $yaml->parse($text);
+        $expectedResult = [
+            "key" => "BAR",
+        ];
+        $this->assertEquals($expectedResult, $result);
+    }
+
     /**
      * @bug
      * 
