@@ -11,7 +11,7 @@ use YamlSpeed\YamlSpeedException;
 class YamlSpeed
 {
     // PARSING REGEXP
-    const KEY_VALUE_REGEXP = "/^(?=(\"|')[^{].+?\\1(?=: |:$)|[^{\"'].+?(?=: |:$))(.+?)(?=: |:$):(.*)$/";
+    const KEY_VALUE_REGEXP = "/^(?=(\"|')[^{].+?\\1(?=: |:$)|[^{\"'].+?(?=: |:$))(.+?)(?=: |:$):(.*)$/s";
 
     // VALUE RESOLVING REGEXP
     const ENV_REGEXP = "/(.*)\\$\_ENV\[('|\")?(.+?)\\2?\](.*)/";

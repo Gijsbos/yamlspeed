@@ -1,0 +1,1 @@
+data: { nginx.conf: "user nginx;\nworker_processes auto;" }

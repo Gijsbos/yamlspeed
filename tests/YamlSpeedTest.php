@@ -376,6 +376,19 @@ final class YamlSpeedTest extends TestCase
         $this->assertEquals($expectedResult, $result);
     }
 
+    public function testKeyValueValueStringWithNewlines2()
+    {
+        $yaml = new YamlSpeed();
+        $result = $yaml->parseFile("tests/newline2.yaml");
+        $expectedResult = array(
+            "data" => [
+                "nginx.conf" => "user nginx;
+worker_processes auto;"
+            ],
+        );
+        $this->assertEquals($expectedResult, $result);
+    }
+
     public function testKeyValueValueStringWithTabs()
     {
         $input =    <<<YAML
