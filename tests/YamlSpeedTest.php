@@ -855,7 +855,7 @@ worker_processes auto;"
                 YAML;
         $result = $yaml->parse($text);
         $expectedResult = [
-            "values" => [],
+            "values" => new \stdClass(),
         ];
         $this->assertEquals($expectedResult, $result);
     }

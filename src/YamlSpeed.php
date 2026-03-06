@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace YamlSpeed;
 
+use stdClass;
 use YamlSpeed\YamlSpeedException;
 
 /**
@@ -654,11 +655,14 @@ class YamlSpeed
     /**
      * parseFlowMap
      */
-    public function parseFlowMap(string &$input) : array
+    public function parseFlowMap(string &$input)
     {
+        // Empty FlowMap
+        if(str_replace(" ", "", $input) == "{}") return new \stdClass();
+
         // Unescape colons here
         $inlineArray = trim(substr($input, 1, strlen($input) - 2));
-
+        
         // Check if there is content in the literal array
         if(strlen($inlineArray) === 0)
             return array();
